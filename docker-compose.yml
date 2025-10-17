@@ -1,0 +1,39 @@
+
+services:
+  # Database Service
+  db:
+    image: postgres:17
+    container_name: orderly-db
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: adminpass
+      POSTGRES_DB: orderly_db
+    ports:
+      - "5433:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    networks:
+      - orderly-network
+
+  #  Spring Boot Application
+  app:
+    build: .
+    container_name: restaurant-service
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/orderly_db
+      SPRING_DATASOURCE_USERNAME: admin
+      SPRING_DATASOURCE_PASSWORD: adminpass
+      SPRING_JPA_HIBERNATE_DDL_AUTO: update
+    networks:
+      - orderly-network
+
+#  Shared volume and network
+volumes:
+  pgdata:
+
+networks:
+  orderly-network:

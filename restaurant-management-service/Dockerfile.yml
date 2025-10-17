@@ -1,0 +1,12 @@
+# Dockerfile
+# CHANGE THIS LINE: Use a Java 21 OpenJDK image
+FROM openjdk:21-jdk-slim
+  # Set the current working directory inside the container
+WORKDIR /app
+  # Copy the built JAR file from your target directory into the container
+  # Adjust the filename pattern 'RestaurantManagementService-*.jar' if needed
+COPY target/restaurant-management-service-0.0.1-SNAPSHOT.jar app.jar #copy the source code not the jar file
+# Expose the port your Spring Boot app runs on
+EXPOSE 8080 5006
+  # Run the application
+CMD ["java", "-jar", "app.jar"]
