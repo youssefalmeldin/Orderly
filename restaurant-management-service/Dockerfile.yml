@@ -1,12 +1,31 @@
-# Dockerfile
-# CHANGE THIS LINE: Use a Java 21 OpenJDK image
+# Stage 1: Build stage
+FROM maven:3.9-eclipse-temurin-21-alpine AS builder
+
+WORKDIR /build
+
+# Copy parent pom.xml first for dependency resolution
+COPY pom.xml .
+COPY restaurant-management-service/pom.xml restaurant-management-service/
+
+# Download dependencies (cached layer if pom.xml doesn't change)
+RUN mvn dependency:go-offline -pl restaurant-management-service
+
+# Copy source code
+COPY restaurant-management-service/src restaurant-management-service/src
+
+# Build the application
+RUN mvn clean package -pl restaurant-management-service -DskipTests
+
+# Stage 2: Runtime stage
 FROM openjdk:21-jdk-slim
-  # Set the current working directory inside the container
+
 WORKDIR /app
-  # Copy the built JAR file from your target directory into the container
-  # Adjust the filename pattern 'RestaurantManagementService-*.jar' if needed
-COPY target/restaurant-management-service-0.0.1-SNAPSHOT.jar app.jar #copy the source code not the jar file
-# Expose the port your Spring Boot app runs on
+
+# Copy the built JAR from builder stage
+COPY --from=builder /build/restaurant-management-service/target/restaurant-management-service-*.jar app.jar
+
+# Expose application and debug ports
 EXPOSE 8080 5006
-  # Run the application
-CMD ["java", "-jar", "app.jar"]
+
+# Run the application with JVM options
+CMD ["java", "-Xmx512m", "-Xms256m", "-jar", "app.jar"]

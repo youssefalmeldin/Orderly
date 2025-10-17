@@ -1,0 +1,38 @@
+# Maven build artifacts
+**/target/
+**/dependency-reduced-pom.xml
+
+# IDE files
+**/.idea/
+**/.vscode/
+**/*.iml
+**/.classpath
+**/.project
+**/.settings/
+
+# Git
+.git/
+.gitignore
+.gitattributes
+
+# Documentation
+**/*.md
+**/docs/
+
+# Test files
+**/src/test/
+
+# Logs
+**/*.log
+
+# OS files
+**/.DS_Store
+**/Thumbs.db
+
+# Docker files
+**/Dockerfile*
+**/docker-compose*.yml
+
+# Environment files
+**/.env
+**/.env.*

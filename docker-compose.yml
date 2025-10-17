@@ -1,5 +1,5 @@
-
 services:
+
   # Database Service
   db:
     image: postgres:17
@@ -17,8 +17,9 @@ services:
 
   #  Spring Boot Application
   app:
-    build: .
-    container_name: restaurant-service
+    build:
+      context: .
+      dockerfile: restaurant-management-service/Dockerfile.yml
     ports:
       - "8080:8080"
     depends_on:
