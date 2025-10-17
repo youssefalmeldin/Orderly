@@ -17,7 +17,7 @@ COPY restaurant-management-service/src restaurant-management-service/src
 RUN mvn clean package -pl restaurant-management-service -DskipTests
 
 # Stage 2: Runtime stage
-FROM openjdk:21-jdk-slim
+FROM eclipse-temurin:21-jre-alpine
 
 WORKDIR /app
 
