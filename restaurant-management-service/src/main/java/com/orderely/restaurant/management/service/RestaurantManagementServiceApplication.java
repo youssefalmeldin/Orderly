@@ -1,4 +1,4 @@
-package com.orderely.restaurantmanagementservice;
+package com.orderely.restaurant.management.service;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
