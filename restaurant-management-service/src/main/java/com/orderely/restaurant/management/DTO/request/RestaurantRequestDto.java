@@ -17,7 +17,7 @@ public class RestaurantRequestDto {
     @Size(max = 500, message = "Description must be less than 500 characters")
     private String description;
 
-    @Pattern(regexp = "^[0-9]{10,15}$", message = "Phone number must be valid")
+    @Pattern(regexp = "^\\+?[0-9 ]{10,20}$", message = "Phone number must be valid")
     private String phone;
 
     @NotNull(message = "Active status is required")
